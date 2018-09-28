@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151DB1F4FF58DC0244846FDE /* libPods-WatchExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E647805FF8992EC27153646 /* libPods-WatchExtension.a */; };
 		73A936D3215DF26D0072A683 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A936D2215DF26D0072A683 /* AppDelegate.swift */; };
 		73A936D5215DF26D0072A683 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A936D4215DF26D0072A683 /* ViewController.swift */; };
 		73A936D8215DF26D0072A683 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A936D6215DF26D0072A683 /* Main.storyboard */; };
@@ -40,7 +41,6 @@
 		73A93BA5215E045D0072A683 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73A93B9F215E045D0072A683 /* Assets.xcassets */; };
 		73A93BA7215E045D0072A683 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A93BA3215E045D0072A683 /* Interface.storyboard */; };
 		73A93BA9215E061E0072A683 /* Route.json in Resources */ = {isa = PBXBuildFile; fileRef = 73A93BA8215E061E0072A683 /* Route.json */; };
-		AC841E6985CF909148CE1E9C /* libPods-WatchExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81C097837061E6654403C1AB /* libPods-WatchExtension.a */; };
 		B8E7AF147E0FE168429CD74D /* libPods-DemoWatch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C74D563B5187F2A4551F31 /* libPods-DemoWatch.a */; };
 		F884630ABF9A66495E73C34A /* libPods-WatchApp Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27D13988DCB03B6C6134B278 /* libPods-WatchApp Extension.a */; };
 /* End PBXBuildFile section */
@@ -88,7 +88,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1217B0C4651B7A7F7A75330E /* Pods-WatchExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchExtension/Pods-WatchExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		27D13988DCB03B6C6134B278 /* libPods-WatchApp Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchApp Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E647805FF8992EC27153646 /* libPods-WatchExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73A936CF215DF26D0072A683 /* DemoWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73A936D2215DF26D0072A683 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73A936D4215DF26D0072A683 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -135,15 +137,11 @@
 		73A93BA2215E045D0072A683 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		73A93BA3215E045D0072A683 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		73A93BA8215E061E0072A683 /* Route.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Route.json; sourceTree = "<group>"; };
-		7B8F3D095DBB164D8E1A7A19 /* Pods-WatchExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchExtension/Pods-WatchExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		81706C1EDA764F7C1FF1D4AA /* Pods-WatchApp Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchApp Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-WatchApp Extension/Pods-WatchApp Extension.release.xcconfig"; sourceTree = "<group>"; };
-		81C097837061E6654403C1AB /* libPods-WatchExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8029D301CB95D9AED4647BDC /* Pods-DemoWatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoWatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoWatch/Pods-DemoWatch.release.xcconfig"; sourceTree = "<group>"; };
 		96C74D563B5187F2A4551F31 /* libPods-DemoWatch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoWatch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F924A3254EF892D70DB90F9 /* Pods-DemoWatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoWatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoWatch/Pods-DemoWatch.debug.xcconfig"; sourceTree = "<group>"; };
 		A6F3236E55DEDB5EC912EA1B /* libPods-WatchApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC53B9DD62A77D34D1B411DB /* Pods-WatchApp Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchApp Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchApp Extension/Pods-WatchApp Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		EB76BFD4D5AED7E5996143F6 /* Pods-DemoWatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoWatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoWatch/Pods-DemoWatch.release.xcconfig"; sourceTree = "<group>"; };
-		F40115E8735F0660B506E4D1 /* Pods-WatchExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-WatchExtension/Pods-WatchExtension.release.xcconfig"; sourceTree = "<group>"; };
+		CF1EAB735F5B48203A3EAE37 /* Pods-DemoWatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoWatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoWatch/Pods-DemoWatch.debug.xcconfig"; sourceTree = "<group>"; };
+		FD473860A7FA0818A9BC7EA1 /* Pods-WatchExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-WatchExtension/Pods-WatchExtension.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +166,7 @@
 			files = (
 				73A93746215DFDA80072A683 /* Foundation.framework in Frameworks */,
 				F884630ABF9A66495E73C34A /* libPods-WatchApp Extension.a in Frameworks */,
-				AC841E6985CF909148CE1E9C /* libPods-WatchExtension.a in Frameworks */,
+				151DB1F4FF58DC0244846FDE /* libPods-WatchExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,7 +180,7 @@
 				96C74D563B5187F2A4551F31 /* libPods-DemoWatch.a */,
 				A6F3236E55DEDB5EC912EA1B /* libPods-WatchApp.a */,
 				27D13988DCB03B6C6134B278 /* libPods-WatchApp Extension.a */,
-				81C097837061E6654403C1AB /* libPods-WatchExtension.a */,
+				3E647805FF8992EC27153646 /* libPods-WatchExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -195,7 +193,7 @@
 				73A936F6215DF2980072A683 /* WatchApp Extension */,
 				73A936D0215DF26D0072A683 /* Products */,
 				1A7CFA7A79EDBCC620364989 /* Frameworks */,
-				AD27050D3DC405F399129DCB /* Pods */,
+				BDADA3C9D56A438C60E3C054 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -289,15 +287,13 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		AD27050D3DC405F399129DCB /* Pods */ = {
+		BDADA3C9D56A438C60E3C054 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9F924A3254EF892D70DB90F9 /* Pods-DemoWatch.debug.xcconfig */,
-				EB76BFD4D5AED7E5996143F6 /* Pods-DemoWatch.release.xcconfig */,
-				BC53B9DD62A77D34D1B411DB /* Pods-WatchApp Extension.debug.xcconfig */,
-				81706C1EDA764F7C1FF1D4AA /* Pods-WatchApp Extension.release.xcconfig */,
-				7B8F3D095DBB164D8E1A7A19 /* Pods-WatchExtension.debug.xcconfig */,
-				F40115E8735F0660B506E4D1 /* Pods-WatchExtension.release.xcconfig */,
+				CF1EAB735F5B48203A3EAE37 /* Pods-DemoWatch.debug.xcconfig */,
+				8029D301CB95D9AED4647BDC /* Pods-DemoWatch.release.xcconfig */,
+				1217B0C4651B7A7F7A75330E /* Pods-WatchExtension.debug.xcconfig */,
+				FD473860A7FA0818A9BC7EA1 /* Pods-WatchExtension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -699,7 +695,7 @@
 		};
 		73A936E2215DF26E0072A683 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F924A3254EF892D70DB90F9 /* Pods-DemoWatch.debug.xcconfig */;
+			baseConfigurationReference = CF1EAB735F5B48203A3EAE37 /* Pods-DemoWatch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -718,7 +714,7 @@
 		};
 		73A936E3215DF26E0072A683 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB76BFD4D5AED7E5996143F6 /* Pods-DemoWatch.release.xcconfig */;
+			baseConfigurationReference = 8029D301CB95D9AED4647BDC /* Pods-DemoWatch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -737,7 +733,7 @@
 		};
 		73A93702215DF2990072A683 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B8F3D095DBB164D8E1A7A19 /* Pods-WatchExtension.debug.xcconfig */;
+			baseConfigurationReference = 1217B0C4651B7A7F7A75330E /* Pods-WatchExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
@@ -761,7 +757,7 @@
 		};
 		73A93703215DF2990072A683 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F40115E8735F0660B506E4D1 /* Pods-WatchExtension.release.xcconfig */;
+			baseConfigurationReference = FD473860A7FA0818A9BC7EA1 /* Pods-WatchExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
