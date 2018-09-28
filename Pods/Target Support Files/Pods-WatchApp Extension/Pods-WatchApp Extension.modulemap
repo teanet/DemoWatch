@@ -1,6 +1,0 @@
-module Pods_WatchApp_Extension {
-  umbrella header "Pods-WatchApp Extension-umbrella.h"
-
-  export *
-  module * { export * }
-}

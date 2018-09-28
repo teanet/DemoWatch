@@ -1,7 +1,0 @@
-module VNWatch {
-  umbrella header "VNWatch-iOS-umbrella.h"
-  exclude header "VNWatch-watchOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
