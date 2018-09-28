@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+CFBundleName = "2GIS";
+CFBundleDisplayName = "2GIS";
+NSLocationAlwaysUsageDescription = "2GIS potřebuje vědět Vaši polohu, aby ji mohl zobrazit na mapě, najít organizace v okolí a doporučit nejlepší trasy";
+NSLocationWhenInUseUsageDescription = "2GIS potřebuje vědět Vaši polohu, aby ji mohl zobrazit na mapě, najít organizace v okolí a doporučit nejlepší trasy";

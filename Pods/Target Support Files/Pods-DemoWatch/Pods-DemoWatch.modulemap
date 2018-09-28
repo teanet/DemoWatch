@@ -1,0 +1,6 @@
+module Pods_DemoWatch {
+  umbrella header "Pods-DemoWatch-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+CFBundleName = "2GIS";
+CFBundleDisplayName = "2GIS";
+NSLocationAlwaysUsageDescription = "2GIS needs to know your location to display it on a map, find companies nearby, and advise the best routes";
+NSLocationWhenInUseUsageDescription = "2GIS needs to know your location to display it on a map, find companies nearby, and advise the best routes";

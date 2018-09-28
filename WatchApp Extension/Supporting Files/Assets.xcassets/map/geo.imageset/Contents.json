@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "idiom" : "watch",
+      "filename" : "geo.pdf"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

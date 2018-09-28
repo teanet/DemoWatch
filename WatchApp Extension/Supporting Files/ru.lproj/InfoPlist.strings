@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+CFBundleName = "2ГИС";
+CFBundleDisplayName = "2ГИС";
+NSLocationAlwaysUsageDescription = "2ГИС нужно знать ваше местоположение, чтобы отображать его на карте, находить организации рядом и советовать лучшие маршруты";
+NSLocationWhenInUseUsageDescription = "2ГИС нужно знать ваше местоположение, чтобы отображать его на карте, находить организации рядом и советовать лучшие маршруты";
