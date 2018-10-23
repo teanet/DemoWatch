@@ -42,7 +42,6 @@
 		73A93BA7215E045D0072A683 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A93BA3215E045D0072A683 /* Interface.storyboard */; };
 		73A93BA9215E061E0072A683 /* Route.json in Resources */ = {isa = PBXBuildFile; fileRef = 73A93BA8215E061E0072A683 /* Route.json */; };
 		B8E7AF147E0FE168429CD74D /* libPods-DemoWatch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C74D563B5187F2A4551F31 /* libPods-DemoWatch.a */; };
-		F884630ABF9A66495E73C34A /* libPods-WatchApp Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27D13988DCB03B6C6134B278 /* libPods-WatchApp Extension.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,7 +164,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				73A93746215DFDA80072A683 /* Foundation.framework in Frameworks */,
-				F884630ABF9A66495E73C34A /* libPods-WatchApp Extension.a in Frameworks */,
 				151DB1F4FF58DC0244846FDE /* libPods-WatchExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -612,6 +610,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DGS_APP_BUILD = 1;
+				DGS_APP_VERION = 1.0;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -673,6 +673,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DGS_APP_BUILD = 1;
+				DGS_APP_VERION = 1.0;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
