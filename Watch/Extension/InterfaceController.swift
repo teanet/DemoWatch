@@ -48,7 +48,8 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		}
 
 		let size = self.scene.frame.size
-		self.moveToUserLocationNode.position = CGPoint(x: size.width * 0.5 - 20, y: -size.height * 0.5 + 20)
+		let offset: CGFloat = 25
+		self.moveToUserLocationNode.position = CGPoint(x: size.width * 0.5 - offset, y: -size.height * 0.5 + offset)
 	}
 
 	internal override func awake(withContext context: Any?) {
@@ -201,9 +202,23 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	// MARK: WKCrownDelegate
 
+	struct Scale {
+		static let min: CGFloat = 0.5
+		static let max: CGFloat = 17.4
+	}
+
 	internal func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
-		let scale = self.rootNode.scale + CGFloat(rotationalDelta * 2)
-		self.rootNode.scale = min(17.4, max(scale, 0.5))
+		var scale = self.rootNode.scale + CGFloat(rotationalDelta * 2)
+		if #available(watchOSApplicationExtension 5.0, *), let crownSequencer = crownSequencer {
+			let isHapticFeedbackEnabled = scale < Scale.max && scale > Scale.min
+			if crownSequencer.isHapticFeedbackEnabled != isHapticFeedbackEnabled {
+				crownSequencer.isHapticFeedbackEnabled = isHapticFeedbackEnabled
+				crownSequencer.focus()
+			}
+		}
+		scale = min(Scale.max, max(scale, Scale.min))
+		self.rootNode.scale = scale
+
 		self.isRotating = true
 		self.startInteractionTimer()
 	}

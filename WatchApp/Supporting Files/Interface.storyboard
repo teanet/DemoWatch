@@ -12,7 +12,7 @@
         <!--Interface Controller-->
         <scene sceneID="RGb-Tp-Ssm">
             <objects>
-                <controller spacing="0.0" fullBounds="YES" fullScreen="YES" id="uu1-YO-GsU" customClass="InterfaceController" customModule="WatchExtension">
+                <controller spacing="0.0" fullScreen="YES" id="uu1-YO-GsU" customClass="InterfaceController" customModule="WatchExtension">
                     <items>
                         <spriteKitScene width="1" height="1" alignment="right" verticalAlignment="bottom" id="zTS-tr-9MY">
                             <gestureRecognizers>
