@@ -20,10 +20,12 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 			self.rootNode.cameraPosition = self.cameraPosition
 		}
 	}
-	private weak var crownDidEndTimer: Timer?
+	private weak var interactionTimer: Timer?
 
 	private let tileLoader = TileLoader()
 	private lazy var locationManager = CLLocationManager()
+	private var isRotating = false
+	private var scheduledSessionItem: WatchSessionItem?
 
 	internal override init() {
 		self.rootNode = MapNode(tileLoader: self.tileLoader)
@@ -105,9 +107,9 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		}
 	}
 
-	private func updateMenuItems() {
+	private func updateMenuItems(_ item: WatchSessionItem) {
 		self.clearAllMenuItems()
-		if !self.rootNode.sessionItem.isNone {
+		if !item.isNone {
 			self.addMenuItem(with: .trash, title: "", action: #selector(self.clearLastOpenObject))
 		}
 	}
@@ -116,13 +118,17 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		self.updateSessionItem(.none)
 	}
 
-	private func stopTimer() {
-		self.crownDidEndTimer?.invalidate()
-	}
-
 	private func updateSessionItem(_ item: WatchSessionItem) {
-		self.rootNode.sessionItem = item
-		self.updateMenuItems()
+		// Есть баг в SpriteKit что если пытаться быстро отрисовывать маршрут то может упасть по EXC_BAD_ACCESS
+		if self.isRotating {
+			self.scheduledSessionItem = item
+		} else {
+			self.rootNode.sessionItem = item
+			self.scheduledSessionItem = nil
+		}
+		DispatchQueue.main.async { [weak self] in
+			self?.updateMenuItems(item)
+		}
 	}
 
 	// MARK: CLLocationManagerDelegate
@@ -161,19 +167,36 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	}
 
 	internal func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-		self.clearLastOpenObject()
 		if let c = applicationContext as? [String: [CLLocationDegrees]],
 			let latLon = c["coordinate"] {
 			let coordinate = CLLocationCoordinate2D(latitude: latLon[0], longitude: latLon[1])
-			self.updateSessionItem(.coordinate(coordinate))
+			self.scheduledSessionItem = .coordinate(coordinate)
 			Analytics.track("WatchAppShowObject")
+			print("WCSession did receive location")
 		} else if let c = applicationContext as? [String: Data],
 			let routeData = c["route"],
 			let route = try? JSONDecoder().decode(Route.self, from: routeData) {
-			self.updateSessionItem(.route(route))
+			self.scheduledSessionItem = .route(route)
 			Analytics.track("WatchAppShowRoute")
+			print("WCSession did receive route")
+		} else {
+			self.scheduledSessionItem = .none
+			print("WCSession did clear")
 		}
-		print("didReceiveApplicationContext>>>>>\(applicationContext)")
+		DispatchQueue.main.async {
+			self.startInteractionTimer()
+		}
+	}
+
+	private func startInteractionTimer() {
+		self.interactionTimer?.invalidate()
+		self.interactionTimer = Timer.scheduledTimer(
+			timeInterval: 0.3,
+			target: self,
+			selector: #selector(self.interactionDidEnd),
+			userInfo: nil,
+			repeats: false
+		)
 	}
 
 	// MARK: WKCrownDelegate
@@ -181,13 +204,16 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	internal func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
 		let scale = self.rootNode.scale + CGFloat(rotationalDelta * 2)
 		self.rootNode.scale = min(17.4, max(scale, 0.5))
-		self.stopTimer()
-		self.crownDidEndTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { [weak self](_) in
-			self?.rootNode.loadVisibleTiles()
-		})
+		self.isRotating = true
+		self.startInteractionTimer()
 	}
 
-	internal func crownDidBecomeIdle(_ crownSequencer: WKCrownSequencer?) {
+	@objc private func interactionDidEnd() {
+		self.isRotating = false
+		self.rootNode.loadVisibleTiles()
+		if let item = self.scheduledSessionItem {
+			self.updateSessionItem(item)
+		}
 	}
 
 	// MARK: MapNodeDelegate

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		151DB1F4FF58DC0244846FDE /* libPods-WatchExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E647805FF8992EC27153646 /* libPods-WatchExtension.a */; };
+		73893180217F2F5900E42270 /* Route1.json in Resources */ = {isa = PBXBuildFile; fileRef = 7389317F217F2F5900E42270 /* Route1.json */; };
 		73A936D3215DF26D0072A683 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A936D2215DF26D0072A683 /* AppDelegate.swift */; };
 		73A936D5215DF26D0072A683 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A936D4215DF26D0072A683 /* ViewController.swift */; };
 		73A936D8215DF26D0072A683 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A936D6215DF26D0072A683 /* Main.storyboard */; };
@@ -90,6 +91,7 @@
 		1217B0C4651B7A7F7A75330E /* Pods-WatchExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchExtension/Pods-WatchExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		27D13988DCB03B6C6134B278 /* libPods-WatchApp Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchApp Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E647805FF8992EC27153646 /* libPods-WatchExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7389317F217F2F5900E42270 /* Route1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Route1.json; sourceTree = "<group>"; };
 		73A936CF215DF26D0072A683 /* DemoWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73A936D2215DF26D0072A683 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73A936D4215DF26D0072A683 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				73A936D9215DF26E0072A683 /* Assets.xcassets */,
 				73A936DB215DF26E0072A683 /* LaunchScreen.storyboard */,
 				73A93BA8215E061E0072A683 /* Route.json */,
+				7389317F217F2F5900E42270 /* Route1.json */,
 				73A936DE215DF26E0072A683 /* Info.plist */,
 			);
 			path = DemoWatch;
@@ -408,6 +411,7 @@
 				73A936DD215DF26E0072A683 /* LaunchScreen.storyboard in Resources */,
 				73A936DA215DF26E0072A683 /* Assets.xcassets in Resources */,
 				73A936D8215DF26D0072A683 /* Main.storyboard in Resources */,
+				73893180217F2F5900E42270 /* Route1.json in Resources */,
 				73A93BA9215E061E0072A683 /* Route.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

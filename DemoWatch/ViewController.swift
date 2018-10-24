@@ -15,7 +15,7 @@ final class ViewController: UIViewController, WCSessionDelegate, CLLocationManag
 		WCSession.default.delegate = self
 		WCSession.default.activate()
 
-		let segmentedControl = UISegmentedControl(items: ["None", "Point", "Route"])
+		let segmentedControl = UISegmentedControl(items: ["None", "Point", "Route1", "Route2"])
 		segmentedControl.selectedSegmentIndex = 0
 		segmentedControl.addTarget(self, action: #selector(self.change(_:)), for: .valueChanged)
 		self.navigationItem.titleView = segmentedControl
@@ -31,13 +31,19 @@ final class ViewController: UIViewController, WCSessionDelegate, CLLocationManag
 			case 1:
 				self.update(["coordinate":[54.863321, 83.18651]])
 			case 2:
-				if let url = Bundle.main.url(forResource: "Route", withExtension: "json"),
-					let data = try? Data.init(contentsOf: url, options: []) {
-					self.update(["route" : data])
-				}
+				self.updateRoute(with: "Route")
+			case 3:
+				self.updateRoute(with: "Route1")
 			default: break
 		}
 
+	}
+
+	func updateRoute(with filename: String) {
+		if let url = Bundle.main.url(forResource: filename, withExtension: "json"),
+			let data = try? Data.init(contentsOf: url, options: []) {
+			self.update(["route" : data])
+		}
 	}
 
 	func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
