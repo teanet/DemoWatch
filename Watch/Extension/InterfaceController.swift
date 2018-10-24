@@ -24,7 +24,6 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	private let tileLoader = TileLoader()
 	private lazy var locationManager = CLLocationManager()
-	private var isRotating = false
 	private var scheduledSessionItem: WatchSessionItem?
 
 	internal override init() {
@@ -116,18 +115,14 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	}
 
 	@objc private func clearLastOpenObject() {
-		self.updateSessionItem(.none)
+		self.scheduledSessionItem = .none
+		self.startInteractionTimer()
 	}
 
 	private func updateSessionItem(_ item: WatchSessionItem) {
 		// Есть баг в SpriteKit что если пытаться быстро отрисовывать маршрут то может упасть по EXC_BAD_ACCESS
-		if self.isRotating {
-			self.scheduledSessionItem = item
-		} else {
-			self.rootNode.sessionItem = item
-			self.scheduledSessionItem = nil
-		}
 		DispatchQueue.main.async { [weak self] in
+			self?.rootNode.sessionItem = item
 			self?.updateMenuItems(item)
 		}
 	}
@@ -149,13 +144,11 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		switch status {
-		case .notDetermined:
-			manager.requestWhenInUseAuthorization()
-		case .authorizedAlways, .authorizedWhenInUse:
-			manager.startUpdatingLocation()
-			Analytics.track("WatchAppLocationPermissionReceived", value: "true")
-		default:
-			Analytics.track("WatchAppLocationPermissionReceived", value: "false")
+			case .notDetermined:
+				manager.requestWhenInUseAuthorization()
+			case .authorizedAlways, .authorizedWhenInUse:
+				manager.startUpdatingLocation()
+			default: break
 		}
 	}
 
@@ -164,7 +157,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	// MARK: WCSessionDelegate
 
 	internal func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-		print("activationDidCompleteWith>>>>>\(activationState.rawValue)", error ?? "")
+		print("ActivationDidCompleteWithState: \(activationState.rawValue)", error ?? "")
 	}
 
 	internal func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
@@ -200,6 +193,14 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		)
 	}
 
+	@objc private func interactionDidEnd() {
+		self.rootNode.loadVisibleTiles()
+		if let item = self.scheduledSessionItem {
+			self.updateSessionItem(item)
+			self.scheduledSessionItem = nil
+		}
+	}
+
 	// MARK: WKCrownDelegate
 
 	struct Scale {
@@ -219,16 +220,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		scale = min(Scale.max, max(scale, Scale.min))
 		self.rootNode.scale = scale
 
-		self.isRotating = true
 		self.startInteractionTimer()
-	}
-
-	@objc private func interactionDidEnd() {
-		self.isRotating = false
-		self.rootNode.loadVisibleTiles()
-		if let item = self.scheduledSessionItem {
-			self.updateSessionItem(item)
-		}
 	}
 
 	// MARK: MapNodeDelegate
