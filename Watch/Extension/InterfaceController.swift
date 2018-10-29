@@ -24,7 +24,16 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	private let tileLoader = TileLoader()
 	private lazy var locationManager = CLLocationManager()
-	private var scheduledSessionItem: WatchSessionItem?
+	private var scheduledSessionItem: WatchSessionItem? {
+		didSet {
+			if let description = self.scheduledSessionItem?.desription {
+				print(description)
+			}
+			if let name = self.scheduledSessionItem?.name {
+				Analytics.track(name)
+			}
+		}
+	}
 
 	internal override init() {
 		self.rootNode = MapNode(tileLoader: self.tileLoader)
@@ -109,7 +118,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	private func updateMenuItems(_ item: WatchSessionItem) {
 		self.clearAllMenuItems()
-		if !item.isNone {
+		if !item.isEmpty {
 			self.addMenuItem(with: .trash, title: "", action: #selector(self.clearLastOpenObject))
 		}
 	}
@@ -161,21 +170,18 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	}
 
 	internal func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-		if let c = applicationContext as? [String: [CLLocationDegrees]],
+		if applicationContext.isEmpty {
+			self.scheduledSessionItem = .none
+		} else if let c = applicationContext as? [String: [CLLocationDegrees]],
 			let latLon = c["coordinate"] {
 			let coordinate = CLLocationCoordinate2D(latitude: latLon[0], longitude: latLon[1])
 			self.scheduledSessionItem = .coordinate(coordinate)
-			Analytics.track("WatchAppShowObject")
-			print("WCSession did receive location")
 		} else if let c = applicationContext as? [String: Data],
 			let routeData = c["route"],
 			let route = try? JSONDecoder().decode(Route.self, from: routeData) {
 			self.scheduledSessionItem = .route(route)
-			Analytics.track("WatchAppShowRoute")
-			print("WCSession did receive route")
 		} else {
 			self.scheduledSessionItem = .none
-			print("WCSession did clear")
 		}
 		DispatchQueue.main.async {
 			self.startInteractionTimer()

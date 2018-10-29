@@ -16,7 +16,7 @@ internal final class MapNode: SKSpriteNode {
 	internal var sceneFrame: CGRect = .zero
 	internal var cameraPosition: CGPoint = .zero
 
-	internal var sessionItem: WatchSessionItem = .none {
+	internal var sessionItem: WatchSessionItem = .empty {
 		didSet {
 			self.updateSessionItemNodes()
 		}
@@ -194,7 +194,7 @@ internal final class MapNode: SKSpriteNode {
 			case .route(let route):
 				self.zoomNodes.forEach { $0.value.route = route }
 				self.updateRoute()
-			case .none:
+			case .empty:
 				break
 		}
 
