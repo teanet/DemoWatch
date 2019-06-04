@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		151DB1F4FF58DC0244846FDE /* libPods-WatchExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E647805FF8992EC27153646 /* libPods-WatchExtension.a */; };
+		734EFC0222A652E30008B21B /* FollowingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734EFC0022A652DC0008B21B /* FollowingMode.swift */; };
 		73893180217F2F5900E42270 /* Route1.json in Resources */ = {isa = PBXBuildFile; fileRef = 7389317F217F2F5900E42270 /* Route1.json */; };
 		738960552182BA8E00D70773 /* Academ.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 738960542182BA8E00D70773 /* Academ.gpx */; };
 		73A936D3215DF26D0072A683 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A936D2215DF26D0072A683 /* AppDelegate.swift */; };
@@ -92,6 +93,7 @@
 		1217B0C4651B7A7F7A75330E /* Pods-WatchExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchExtension/Pods-WatchExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		27D13988DCB03B6C6134B278 /* libPods-WatchApp Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchApp Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E647805FF8992EC27153646 /* libPods-WatchExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		734EFC0022A652DC0008B21B /* FollowingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingMode.swift; sourceTree = "<group>"; };
 		7389317F217F2F5900E42270 /* Route1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Route1.json; sourceTree = "<group>"; };
 		738960542182BA8E00D70773 /* Academ.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Academ.gpx; sourceTree = "<group>"; };
 		73A936CF215DF26D0072A683 /* DemoWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,6 +266,7 @@
 				73A93722215DF8280072A683 /* CGFloat.swift */,
 				73A93723215DF8280072A683 /* RouteController.swift */,
 				73A93724215DF8280072A683 /* TilePath.swift */,
+				734EFC0022A652DC0008B21B /* FollowingMode.swift */,
 			);
 			name = Extension;
 			path = Watch/Extension;
@@ -368,7 +371,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = teanet;
 				TargetAttributes = {
 					73A936CE215DF26D0072A683 = {
@@ -502,6 +505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				734EFC0222A652E30008B21B /* FollowingMode.swift in Sources */,
 				73A9372E215DF8280072A683 /* ExtensionDelegate.swift in Sources */,
 				73A9372C215DF8280072A683 /* TileLoader.swift in Sources */,
 				73A93729215DF8280072A683 /* InterfaceController.swift in Sources */,
@@ -587,6 +591,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -650,6 +655,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -717,7 +723,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -736,7 +742,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -759,7 +765,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
@@ -783,7 +789,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
@@ -803,7 +809,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
@@ -823,7 +829,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};

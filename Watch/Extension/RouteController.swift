@@ -31,7 +31,7 @@ internal final class RouteController: WKInterfaceController {
 		super.didAppear()
 		self.table.setNumberOfRows(self.route.maneuvers.count, withRowType: "ManeuverCell")
 		if self.selectedManeuver != nil,
-			let index = self.route.maneuvers.index(where: { $0.id == self.selectedManeuver?.id }) {
+			let index = self.route.maneuvers.firstIndex(where: { $0.id == self.selectedManeuver?.id }) {
 			self.table.scrollToRow(at: index)
 			let group = (self.table.rowController(at: index) as! ManeuverCell).background
 			group?.setBackgroundColor(.lightGray)

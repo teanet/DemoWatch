@@ -11,8 +11,23 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	private let rootNode: MapNode
 	private let scene = SKScene()
-	private let moveToUserLocationNode = SKNode.image(#imageLiteral(resourceName: "geoControl"))
+	private let moveToUserLocationNode = SKNode.named("geo_disabled")
 	private let camera = SKCameraNode()
+	private var isTracking: Bool = false {
+		didSet {
+			if self.isTracking != oldValue {
+				self.updateMoveToUserLocationNode()
+			}
+		}
+	}
+	private var isPanGestureInProgress = false {
+		didSet {
+			if self.isPanGestureInProgress != oldValue {
+				self.updateMoveToUserLocationNode()
+				self.rootNode.updateCurrentLocationNode()
+			}
+		}
+	}
 
 	/// Текущая позиция камеры
 	private var cameraPosition = CGPoint.zero {
@@ -54,10 +69,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 			self.locationManager.delegate = self
 			self.isInterfaceReady = true
 		}
-
-		let size = self.scene.frame.size
-		let offset: CGFloat = 25
-		self.moveToUserLocationNode.position = CGPoint(x: size.width * 0.5 - offset, y: -size.height * 0.5 + offset)
+		self.updateMoveToUserLocationNode()
 	}
 
 	internal override func awake(withContext context: Any?) {
@@ -76,7 +88,6 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		self.scene.addChild(self.camera)
 		self.scene.camera = self.camera
 
-		self.moveToUserLocationNode.alpha = 0
 		self.camera.addChild(self.moveToUserLocationNode)
 	}
 
@@ -93,6 +104,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		let frame = CGRect(origin: origin, size: size)
 		if frame.contains(sender.locationInObject()) {
 			self.moveToUserLocationNode.blink()
+			self.isTracking = true
 			self.rootNode.moveToCenter(zoomLocation: .kBuildingZoomLevel)
 		} else if case .route(let route) = self.rootNode.sessionItem {
 			let ctx = RouteControllerContext.init(route: route, selectedManeuver: self.rootNode.selectedManeuver, delegate: self)
@@ -104,13 +116,18 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	@IBAction func pan(_ sender: WKPanGestureRecognizer) {
 		switch sender.state {
 		case .changed:
+			self.isPanGestureInProgress = true
 			let tr = sender.translationInObject()
-			self.camera.position = CGPoint(x: self.cameraPosition.x - tr.x,
-										   y: self.cameraPosition.y + tr.y)
+			self.camera.position = CGPoint(
+				x: self.cameraPosition.x - tr.x,
+				y: self.cameraPosition.y + tr.y
+			)
 		case .ended, .failed, .cancelled:
 			self.cameraPosition = self.camera.position
-			self.updateMoveToUserLocationNode(hidden: false)
 			self.rootNode.loadVisibleTiles()
+			self.isPanGestureInProgress = false
+			/// Stop tracking user location if user pan map
+			self.isTracking = false
 		default:
 			break
 		}
@@ -138,14 +155,17 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	// MARK: CLLocationManagerDelegate
 
-	private var once = false
+	private var updateUserLocationAtLeastOnce = false
 	internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		self.rootNode.currentLocation = manager.location?.coordinate
-		guard let location = manager.location else { return }
+		guard let location = manager.location, !self.isPanGestureInProgress else { return }
 
-		if !self.once {
-			self.once = true
+		if !self.updateUserLocationAtLeastOnce {
+			self.updateUserLocationAtLeastOnce = true
 			self.rootNode.move(to: location.coordinate, zoomLevel: .kDistrictZoomLevel)
+			self.updateMoveToUserLocationNode()
+		} else if self.isTracking {
+			self.rootNode.move(to: location.coordinate, zoomLevel: self.rootNode.scale)
 		} else {
 			self.rootNode.updateCurrentLocationNode()
 		}
@@ -231,12 +251,19 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 
 	// MARK: MapNodeDelegate
 
-	internal func updateMoveToUserLocationNode(hidden: Bool) {
-		if hidden {
-			self.moveToUserLocationNode.run(.fadeOut(withDuration: 0.3))
-		} else if self.rootNode.currentLocation != nil {
-			self.moveToUserLocationNode.run(.fadeIn(withDuration: 0.3))
+	func updateMoveToUserLocationNode() {
+		let mode: FollowingMode
+		if self.rootNode.currentLocation == nil {
+			mode = .disabled
+		} else if self.isTracking {
+			mode = .following
+		} else {
+			mode = .center
 		}
+		self.moveToUserLocationNode.texture = mode.texture()
+		let size = self.scene.frame.size
+		let offset: CGFloat = 25
+		self.moveToUserLocationNode.position = CGPoint(x: size.width * 0.5 - offset, y: -size.height * 0.5 + offset)
 	}
 
 	func cameraScaleDidChange(_ scale: CGFloat) {

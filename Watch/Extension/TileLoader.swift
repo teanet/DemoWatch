@@ -117,7 +117,7 @@ extension Array where Element == TileLoader.LoadingTile {
 	}
 
 	mutating func remove(_ tile: TilePath) {
-		if let index = self.index(where: { $0.tile == tile }) {
+		if let index = self.firstIndex(where: { $0.tile == tile }) {
 			let loadingTile = self.remove(at: index)
 			loadingTile.task.cancel()
 		}

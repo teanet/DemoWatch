@@ -58,7 +58,7 @@ internal final class Analytics {
 
 public extension UserDefaults {
 
-	public var events: [WatchEvent] {
+	var events: [WatchEvent] {
 		get {
 			guard let data = self.data(forKey: "analytics"),
 				let events = try? JSONDecoder().decode([WatchEvent].self, from: data) else { return [] }
@@ -71,7 +71,7 @@ public extension UserDefaults {
 		}
 	}
 
-	public var scheduledEvents: [WatchEvent] {
+	var scheduledEvents: [WatchEvent] {
 		get {
 			guard let data = self.data(forKey: "scheduledEvents"),
 				let events = try? JSONDecoder().decode([WatchEvent].self, from: data) else { return [] }

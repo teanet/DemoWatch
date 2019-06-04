@@ -83,7 +83,7 @@ extension Maneuver {
 
 public extension Route {
 
-	public var pathComponents: [PathComponent] {
+	var pathComponents: [PathComponent] {
 		return self.maneuvers.flatMap { (maneuver) -> [Geometry] in
 			maneuver.outcomingPath?.geometries ?? []
 		}.map {
@@ -91,13 +91,13 @@ public extension Route {
 		}
 	}
 
-	public var startPoint: CLLocationCoordinate2D? {
+	var startPoint: CLLocationCoordinate2D? {
 		if let startPoint = self.beginPedestrianPath?.geometry.path.first {
 			return startPoint
 		}
 		return self.maneuvers.first(where: { $0.outcomingPath?.geometries.isEmpty == false })?.startPoint
 	}
-	public var endPoint: CLLocationCoordinate2D? {
+	var endPoint: CLLocationCoordinate2D? {
 		if let endPoint = self.endPedestrianPath?.geometry.path.last {
 			return endPoint
 		}
@@ -122,7 +122,7 @@ public struct PathComponent {
 
 public extension Geometry {
 
-	public var path: [CLLocationCoordinate2D] {
+	var path: [CLLocationCoordinate2D] {
 		guard self.selection.hasPrefix("LINESTRING(") else { return [] }
 		var selection = self.selection
 		selection = selection.replacingOccurrences(of: "LINESTRING(", with: "")

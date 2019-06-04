@@ -4,7 +4,7 @@ import VNWatch
 
 internal protocol MapNodeDelegate: AnyObject {
 
-	func updateMoveToUserLocationNode(hidden: Bool)
+	func updateMoveToUserLocationNode()
 	func cameraPositionDidChange(_ position: CGPoint, animated: Bool, completion: @escaping () -> Void)
 	func cameraScaleDidChange(_ scale: CGFloat)
 
@@ -110,20 +110,20 @@ internal final class MapNode: SKSpriteNode {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	internal func loadVisibleTiles() {
+	func loadVisibleTiles() {
 		let z = self.zoomLevel
 		let cameraFrame = self.cameraFrame()
 		self.zoomNodes[z]!.loadVisibleTiles(forCameraFrame: cameraFrame)
 	}
 
-	internal func updateCurrentLocationNode() {
+	func updateCurrentLocationNode() {
 		guard let currentLocation = self.currentLocation else { return }
 
 		let dc = currentLocation.location(for: self.zoomLevel)
 		self.userLocationNode.position = dc + self.currentNode.correction
 
 		if let lastUserCoordinate = self.lastUserCoordinate, !lastUserCoordinate.isNear(currentLocation) {
-			self.delegate?.updateMoveToUserLocationNode(hidden: false)
+			self.delegate?.updateMoveToUserLocationNode()
 		}
 	}
 
@@ -136,12 +136,7 @@ internal final class MapNode: SKSpriteNode {
 		self.cameraPosition = positionInWorld + self.currentNode.correction
 		self.updateCurrentLocationNode()
 
-		let hidden: Bool = {
-			guard let currentLocation = self.currentLocation else { return true }
-			return to == currentLocation
-		}()
-		self.delegate?.updateMoveToUserLocationNode(hidden: hidden)
-
+		self.delegate?.updateMoveToUserLocationNode()
 		self.delegate?.cameraPositionDidChange(self.cameraPosition, animated: true, completion: { [weak self] in
 			self?.scale = zoomLevel
 			self?.loadVisibleTiles()
