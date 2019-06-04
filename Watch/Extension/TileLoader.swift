@@ -2,7 +2,7 @@ import Foundation
 import WatchKit
 import SpriteKit
 
-internal final class TileLoader: NSObject, URLSessionDataDelegate {
+final class TileLoader: NSObject, URLSessionDataDelegate {
 
 	private lazy var session: URLSession = { [unowned self] in
 		let configuration = URLSessionConfiguration.default
@@ -16,7 +16,7 @@ internal final class TileLoader: NSObject, URLSessionDataDelegate {
 	private let lockQueue = DispatchQueue(label: "ru.doublegis.grymmobile.watch")
 	private var singleTileLoaded = false
 
-	internal override init() {
+	override init() {
 		super.init()
 		self.cache.countLimit = 70
 	}

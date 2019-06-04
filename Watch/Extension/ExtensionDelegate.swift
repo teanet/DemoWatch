@@ -1,6 +1,6 @@
 import WatchKit
 
-internal final class ExtensionDelegate: NSObject, WKExtensionDelegate {
+final class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.

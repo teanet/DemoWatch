@@ -5,7 +5,7 @@ import MapKit
 import WatchConnectivity
 import VNWatch
 
-internal final class InterfaceController: WKInterfaceController, CLLocationManagerDelegate, WCSessionDelegate, WKCrownDelegate, MapNodeDelegate, RouteControllerDelegate {
+final class InterfaceController: WKInterfaceController, CLLocationManagerDelegate, WCSessionDelegate, WKCrownDelegate, MapNodeDelegate, RouteControllerDelegate {
 
 	@IBOutlet var sk: WKInterfaceSKScene!
 
@@ -50,14 +50,14 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		}
 	}
 
-	internal override init() {
+	override init() {
 		self.rootNode = MapNode(tileLoader: self.tileLoader)
 		super.init()
 		self.setTitle("2GIS")
 	}
 
 	private var isInterfaceReady = false
-	internal override func didAppear() {
+	override func didAppear() {
 		super.didAppear()
 
 		self.rootNode.sceneFrame = self.scene.frame
@@ -72,7 +72,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		self.updateMoveToUserLocationNode()
 	}
 
-	internal override func awake(withContext context: Any?) {
+	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 
 		WCSession.default.delegate = self
@@ -91,7 +91,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		self.camera.addChild(self.moveToUserLocationNode)
 	}
 
-	internal override func willActivate() {
+	override func willActivate() {
 		super.willActivate()
 		self.crownSequencer.delegate = self
 		self.crownSequencer.focus()
@@ -141,7 +141,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	}
 
 	@objc private func clearLastOpenObject() {
-		self.scheduledSessionItem = .none
+		self.scheduledSessionItem = .empty
 		self.startInteractionTimer()
 	}
 
@@ -156,7 +156,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 	// MARK: CLLocationManagerDelegate
 
 	private var updateUserLocationAtLeastOnce = false
-	internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		self.rootNode.currentLocation = manager.location?.coordinate
 		guard let location = manager.location, !self.isPanGestureInProgress else { return }
 
@@ -171,7 +171,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		}
 	}
 
-	internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		switch status {
 			case .notDetermined:
 				manager.requestWhenInUseAuthorization()
@@ -181,17 +181,17 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		}
 	}
 
-	internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
 
 	// MARK: WCSessionDelegate
 
-	internal func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
 		print("ActivationDidCompleteWithState: \(activationState.rawValue)", error ?? "")
 	}
 
-	internal func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+	func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
 		if applicationContext.isEmpty {
-			self.scheduledSessionItem = .none
+			self.scheduledSessionItem = .empty
 		} else if let c = applicationContext as? [String: [CLLocationDegrees]],
 			let latLon = c["coordinate"] {
 			let coordinate = CLLocationCoordinate2D(latitude: latLon[0], longitude: latLon[1])
@@ -201,7 +201,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 			let route = try? JSONDecoder().decode(Route.self, from: routeData) {
 			self.scheduledSessionItem = .route(route)
 		} else {
-			self.scheduledSessionItem = .none
+			self.scheduledSessionItem = .empty
 		}
 		DispatchQueue.main.async {
 			self.startInteractionTimer()
@@ -234,7 +234,7 @@ internal final class InterfaceController: WKInterfaceController, CLLocationManag
 		static let max: CGFloat = 17.4
 	}
 
-	internal func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
+	func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
 		var scale = self.rootNode.scale + CGFloat(rotationalDelta * 2)
 		if #available(watchOSApplicationExtension 5.0, *), let crownSequencer = crownSequencer {
 			let isHapticFeedbackEnabled = scale < Scale.max && scale > Scale.min

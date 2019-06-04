@@ -1,7 +1,7 @@
 import SpriteKit
 import VNWatch
 
-internal final class MapLayerNode: SKNode {
+final class MapLayerNode: SKNode {
 
 	let z: Int
 	var tiles = [TilePath: TileNode]()

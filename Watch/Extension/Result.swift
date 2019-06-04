@@ -1,6 +1,6 @@
 import SpriteKit
 
-internal enum Result {
+enum Result {
 	case texture(SKTexture)
 	case error
 	case cancelled

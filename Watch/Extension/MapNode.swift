@@ -2,7 +2,7 @@ import SpriteKit
 import WatchKit
 import VNWatch
 
-internal protocol MapNodeDelegate: AnyObject {
+protocol MapNodeDelegate: AnyObject {
 
 	func updateMoveToUserLocationNode()
 	func cameraPositionDidChange(_ position: CGPoint, animated: Bool, completion: @escaping () -> Void)
@@ -10,18 +10,18 @@ internal protocol MapNodeDelegate: AnyObject {
 
 }
 
-internal final class MapNode: SKSpriteNode {
+final class MapNode: SKSpriteNode {
 
-	internal var lastUserCoordinate: CLLocationCoordinate2D?
-	internal var sceneFrame: CGRect = .zero
-	internal var cameraPosition: CGPoint = .zero
+	var lastUserCoordinate: CLLocationCoordinate2D?
+	var sceneFrame: CGRect = .zero
+	var cameraPosition: CGPoint = .zero
 
-	internal var sessionItem: WatchSessionItem = .empty {
+	var sessionItem: WatchSessionItem = .empty {
 		didSet {
 			self.updateSessionItemNodes()
 		}
 	}
-	internal var selectedManeuver: Maneuver? {
+	var selectedManeuver: Maneuver? {
 		didSet {
 			if let point = self.selectedManeuver?.startPoint {
 				self.move(to: point, zoomLevel: .kBuildingZoomLevel)
@@ -44,7 +44,7 @@ internal final class MapNode: SKSpriteNode {
 	/// Нужно постоянно корректировать положение тайлов,
 	/// чтобы они были максимально близко к 0,0 иначе спрайтовый движок начинает очень сильно колбасить при зуме
 	/// и между тайлами образуются щели
-	internal var scale: CGFloat = 1 {
+	var scale: CGFloat = 1 {
 		didSet {
 			let to = Int(round(self.scale))
 			if self.zoomLevel != to {
@@ -73,10 +73,10 @@ internal final class MapNode: SKSpriteNode {
 			self.updateToCurrentScale()
 		}
 	}
-	internal var currentNode: MapLayerNode {
+	var currentNode: MapLayerNode {
 		return self.zoomNodes[self.zoomLevel]!
 	}
-	internal var currentLocation: CLLocationCoordinate2D? {
+	var currentLocation: CLLocationCoordinate2D? {
 		didSet {
 			self.userLocationNode.isHidden = self.currentLocation == nil
 		}
@@ -127,7 +127,7 @@ internal final class MapNode: SKSpriteNode {
 		}
 	}
 
-	internal func move(to: CLLocationCoordinate2D, zoomLevel: CGFloat, completion: (() -> Void)? = nil) {
+	func move(to: CLLocationCoordinate2D, zoomLevel: CGFloat, completion: (() -> Void)? = nil) {
 		self.lastUserCoordinate = to
 		let positionInWorld = to.location(for: self.zoomLevel)
 		let visibleTile = positionInWorld.visibleTile(for: self.zoomLevel)
@@ -170,13 +170,13 @@ internal final class MapNode: SKSpriteNode {
 		self.cameraScaleNodes.forEach { $0.setScale(nodeScale) }
 	}
 
-	internal func moveToCenter(zoomLocation: CGFloat) {
+	func moveToCenter(zoomLocation: CGFloat) {
 		if let location = self.currentLocation {
 			self.move(to: location, zoomLevel: zoomLocation)
 		}
 	}
 
-	internal func updateSessionItemNodes() {
+	func updateSessionItemNodes() {
 
 		self.routeNodes.hide()
 		self.destinationNode.isHidden = true

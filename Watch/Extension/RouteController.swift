@@ -11,7 +11,7 @@ protocol RouteControllerDelegate: AnyObject {
 	func didSelectManeuver(_ maneuver: Maneuver)
 }
 
-internal final class RouteController: WKInterfaceController {
+final class RouteController: WKInterfaceController {
 
 	private var route: Route!
 	private var selectedManeuver: Maneuver?

@@ -2,9 +2,9 @@ import WatchKit
 import WatchConnectivity
 import VNWatch
 
-internal final class Analytics {
+final class Analytics {
 
-	internal static let shared = Analytics()
+	static let shared = Analytics()
 	private let session: WCSession
 	private let ud: UserDefaults
 	private weak var timer: Timer?
@@ -19,7 +19,7 @@ internal final class Analytics {
 		self.shared.track(name, value: value)
 	}
 
-	internal func track(_ name: String, value: String? = nil) {
+	func track(_ name: String, value: String? = nil) {
 		self.lockQueue.async {
 			var events = self.ud.events
 			events += [ WatchEvent(name: name, value: value) ]
@@ -28,7 +28,7 @@ internal final class Analytics {
 		self.scheduleSync()
 	}
 
-	internal func scheduleSync() {
+	func scheduleSync() {
 		self.timer?.invalidate()
 		self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.sync), userInfo: nil, repeats: false)
 	}
