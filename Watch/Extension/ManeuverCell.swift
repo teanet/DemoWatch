@@ -14,4 +14,3 @@ public final class ManeuverCell: NSObject {
 	}
 
 }
-

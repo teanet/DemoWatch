@@ -12,12 +12,12 @@ extension CarTrafficLoad {
 
 	var color: UIColor {
 		switch self {
-		case .fast: 		return #colorLiteral(red: 0.2705882353, green: 0.7176470588, blue: 0, alpha: 1)
-		case .ignore: 		return #colorLiteral(red: 0.5058823529, green: 0.007843137255, blue: 0.05098039216, alpha: 1)
-		case .noTraffic: 	return .noTraffic
-		case .normal: 		return #colorLiteral(red: 1, green: 0.7529411765, blue: 0, alpha: 1)
-		case .slow: 		return #colorLiteral(red: 0.9497485757, green: 0.3531837463, blue: 0, alpha: 1)
-		case .inactive:		return #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1)
+			case .fast: 		return #colorLiteral(red: 0.2705882353, green: 0.7176470588, blue: 0, alpha: 1)
+			case .ignore: 		return #colorLiteral(red: 0.5058823529, green: 0.007843137255, blue: 0.05098039216, alpha: 1)
+			case .noTraffic: 	return .noTraffic
+			case .normal: 		return #colorLiteral(red: 1, green: 0.7529411765, blue: 0, alpha: 1)
+			case .slow: 		return #colorLiteral(red: 0.9497485757, green: 0.3531837463, blue: 0, alpha: 1)
+			case .inactive:		return #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1)
 		}
 	}
 
@@ -86,4 +86,3 @@ final class RoadTile: SKShapeNode {
 	}
 
 }
-

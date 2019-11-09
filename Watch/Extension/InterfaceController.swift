@@ -115,21 +115,21 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 
 	@IBAction func pan(_ sender: WKPanGestureRecognizer) {
 		switch sender.state {
-		case .changed:
-			self.isPanGestureInProgress = true
-			let tr = sender.translationInObject()
-			self.camera.position = CGPoint(
-				x: self.cameraPosition.x - tr.x,
-				y: self.cameraPosition.y + tr.y
-			)
-		case .ended, .failed, .cancelled:
-			self.cameraPosition = self.camera.position
-			self.rootNode.loadVisibleTiles()
-			self.isPanGestureInProgress = false
-			/// Stop tracking user location if user pan map
-			self.isTracking = false
-		default:
-			break
+			case .changed:
+				self.isPanGestureInProgress = true
+				let tr = sender.translationInObject()
+				self.camera.position = CGPoint(
+					x: self.cameraPosition.x - tr.x,
+					y: self.cameraPosition.y + tr.y
+				)
+			case .ended, .failed, .cancelled:
+				self.cameraPosition = self.camera.position
+				self.rootNode.loadVisibleTiles()
+				self.isPanGestureInProgress = false
+				/// Stop tracking user location if user pan map
+				self.isTracking = false
+			default:
+				break
 		}
 	}
 
@@ -291,4 +291,3 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 	}
 
 }
-

@@ -6,7 +6,7 @@ let kTileSize = CGSize(width: kTileLength, height: kTileLength)
 
 struct TilePath: Hashable {
 
-	static func ==(lhs: TilePath, rhs: TilePath) -> Bool {
+	static func == (lhs: TilePath, rhs: TilePath) -> Bool {
 		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
 	}
 
@@ -66,4 +66,3 @@ struct TilePath: Hashable {
 	}
 
 }
-

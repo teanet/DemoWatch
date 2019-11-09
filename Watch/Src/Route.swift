@@ -1,6 +1,9 @@
 import Foundation
 import CoreLocation
+
+#if !os(iOS)
 import WatchKit
+#endif
 
 public struct Geometry: Codable {
 	let color: CarTrafficLoad?
@@ -79,7 +82,6 @@ extension Maneuver {
 	}
 
 }
-
 
 public extension Route {
 

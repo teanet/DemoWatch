@@ -2,7 +2,7 @@ import SpriteKit
 
 final class TileNode: SKSpriteNode {
 
-	static let bgTexture = SKTexture(image: #imageLiteral(resourceName: "tile_bg"))
+	static let bgTexture = SKTexture(image: UIImage(imageLiteralResourceName: "tile_bg"))
 	private var tileLoader: TileLoader!
 	private var isLoading = false
 	private var mapTileNode: SKSpriteNode?
@@ -32,10 +32,10 @@ final class TileNode: SKSpriteNode {
 		self.isLoading = true
 		self.tileLoader.loadTile(at: path, priority: priority) { [weak self] (result, path) in
 			switch result {
-			case .texture(let texture):
-				self?.updateTileTexture(texture, path: path, animated: true)
-			case .cancelled: break
-			case .error: break
+				case .texture(let texture):
+					self?.updateTileTexture(texture, path: path, animated: true)
+				case .cancelled: break
+				case .error: break
 			}
 			self?.isLoading = false
 		}

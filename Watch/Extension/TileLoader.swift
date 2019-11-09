@@ -28,10 +28,8 @@ final class TileLoader: NSObject, URLSessionDataDelegate {
 	}
 
 	public subscript(path: TilePath) -> SKTexture? {
-		get {
-			let url = path.url()
-			return self.cache.object(forKey: url as NSURL)
-		}
+		let url = path.url()
+		return self.cache.object(forKey: url as NSURL)
 	}
 
 	typealias ResultBlock = (Result, TilePath) -> Void
@@ -73,7 +71,7 @@ final class TileLoader: NSObject, URLSessionDataDelegate {
 		}
 
 		let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 5)
-		let task = self.session.dataTask(with: request) { [weak self] (data, response, error) in
+		let task = self.session.dataTask(with: request) { [weak self] (data, _, error) in
 			guard let this = self else { return }
 
 			if let data = data, let image = UIImage(data: data) {

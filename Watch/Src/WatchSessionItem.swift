@@ -20,17 +20,17 @@ public enum WatchSessionItem {
 
 	public var desription: String {
 		switch self {
-			case .coordinate(_): return "WCSession did receive location"
+			case .coordinate: return "WCSession did receive location"
 			case .empty: return "WCSession did clear"
-			case .route(_): return "WCSession did receive route"
+			case .route: return "WCSession did receive route"
 		}
 	}
 
 	public var name: String? {
 		switch self {
-			case .coordinate(_): return "WatchAppShowObject"
+			case .coordinate: return "WatchAppShowObject"
 			case .empty: return nil
-			case .route(_): return "WatchAppShowRoute"
+			case .route: return "WatchAppShowRoute"
 		}
 	}
 
@@ -42,4 +42,3 @@ public enum WatchSessionItem {
 	}
 
 }
-

@@ -9,7 +9,7 @@ extension CLLocationCoordinate2D {
 		return to.distance(from: from) < 50
 	}
 
-	static func ==(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+	static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
 		return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
 	}
 

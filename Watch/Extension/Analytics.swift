@@ -44,7 +44,7 @@ final class Analytics {
 			self.ud.events = []
 
 			if let data = try? JSONEncoder().encode(scheduledEvents) {
-				self.session.sendMessageData(data, replyHandler: { (response) in
+				self.session.sendMessageData(data, replyHandler: { _ in
 
 					self.lockQueue.async {
 						self.ud.scheduledEvents = []
@@ -85,4 +85,3 @@ public extension UserDefaults {
 	}
 
 }
-

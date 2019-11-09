@@ -2,9 +2,9 @@ import SpriteKit
 import VNWatch
 
 final class RouteNodes {
-	private let routeA = SKNode.image(#imageLiteral(resourceName: "route_a"))
-	private let routeB = SKNode.image(#imageLiteral(resourceName: "route_b"))
-	private let selectedRoute = SKNode.image(#imageLiteral(resourceName: "route_movement"))
+	private let routeA = SKNode.image(UIImage(imageLiteralResourceName: "route_a"))
+	private let routeB = SKNode.image(UIImage(imageLiteralResourceName: "route_b"))
+	private let selectedRoute = SKNode.image(UIImage(imageLiteralResourceName: "route_movement"))
 
 	var nodes: [SKSpriteNode] {
 		return [ self.routeA, self.selectedRoute, self.routeB ]

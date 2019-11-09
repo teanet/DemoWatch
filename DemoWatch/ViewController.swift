@@ -1,6 +1,5 @@
 import CoreLocation
 import SpriteKit
-import WatchKit
 import WatchConnectivity
 import UIKit
 import VNWatch

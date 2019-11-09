@@ -4,6 +4,7 @@ import VNWatch
 struct RouteControllerContext {
 	let route: Route
 	let selectedManeuver: Maneuver?
+	// swiftlint:disable:next weak_delegate
 	let delegate: RouteControllerDelegate
 }
 
@@ -21,10 +22,12 @@ final class RouteController: WKInterfaceController {
 
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
-		let ctx = (context as! RouteControllerContext)
-		self.route = ctx.route
-		self.delegate = ctx.delegate
-		self.selectedManeuver = ctx.selectedManeuver
+		guard let context = context as? RouteControllerContext else {
+			return assertionFailure("The context must be a RouteControllerContext instance.")
+		}
+		self.route = context.route
+		self.delegate = context.delegate
+		self.selectedManeuver = context.selectedManeuver
 	}
 
 	override func didAppear() {
@@ -33,13 +36,13 @@ final class RouteController: WKInterfaceController {
 		if self.selectedManeuver != nil,
 			let index = self.route.maneuvers.firstIndex(where: { $0.id == self.selectedManeuver?.id }) {
 			self.table.scrollToRow(at: index)
-			let group = (self.table.rowController(at: index) as! ManeuverCell).background
+			let group = (self.table.rowController(at: index) as? ManeuverCell)?.background
 			group?.setBackgroundColor(.lightGray)
 		}
 
 		for (row, maneuver) in self.route.maneuvers.enumerated() {
-			let cell = self.table.rowController(at: row) as! ManeuverCell
-			cell.update(with: maneuver)
+			let cell = self.table.rowController(at: row) as? ManeuverCell
+			cell?.update(with: maneuver)
 		}
 	}
 
@@ -49,4 +52,3 @@ final class RouteController: WKInterfaceController {
 	}
 
 }
-

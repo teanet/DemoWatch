@@ -81,7 +81,7 @@ final class MapLayerNode: SKNode {
 		self.roadTile.position = self.roadTile.center + self.correction
 	}
 
-	func loadTile(path: TilePath, priority: Float)  {
+	func loadTile(path: TilePath, priority: Float) {
 		if let node = self.putTileIfNeeded(path: path), priority > 0 {
 			node.load(path, priority: priority)
 		}

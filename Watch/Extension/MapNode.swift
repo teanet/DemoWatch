@@ -132,12 +132,13 @@ final class MapNode: SKSpriteNode {
 		let positionInWorld = to.location(for: self.zoomLevel)
 		let visibleTile = positionInWorld.visibleTile(for: self.zoomLevel)
 
+		let shouldAnimate = self.currentNode.visibleTile == visibleTile
 		self.currentNode.visibleTile = visibleTile
 		self.cameraPosition = positionInWorld + self.currentNode.correction
 		self.updateCurrentLocationNode()
 
 		self.delegate?.updateMoveToUserLocationNode()
-		self.delegate?.cameraPositionDidChange(self.cameraPosition, animated: true, completion: { [weak self] in
+		self.delegate?.cameraPositionDidChange(self.cameraPosition, animated: shouldAnimate, completion: { [weak self] in
 			self?.scale = zoomLevel
 			self?.loadVisibleTiles()
 		})
@@ -183,7 +184,7 @@ final class MapNode: SKSpriteNode {
 		self.zoomNodes.forEach { $0.value.route = nil }
 
 		switch self.sessionItem {
-			case .coordinate(_):
+			case .coordinate:
 				self.destinationNode.isHidden = false
 				self.updateDestinationNode()
 			case .route(let route):
@@ -214,4 +215,3 @@ final class MapNode: SKSpriteNode {
 	}
 
 }
-
