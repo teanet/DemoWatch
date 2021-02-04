@@ -5,25 +5,25 @@ import MapKit
 import WatchConnectivity
 import VNWatch
 
-final class InterfaceController: WKInterfaceController, CLLocationManagerDelegate, WCSessionDelegate, WKCrownDelegate, MapNodeDelegate, RouteControllerDelegate {
+final class InterfaceController: WKInterfaceController {
 
 	@IBOutlet var sk: WKInterfaceSKScene!
 
-	private let rootNode: MapNode
+	fileprivate let rootNode: MapNode
 	private let scene = SKScene()
 	private let moveToUserLocationNode = SKNode.named("geo_disabled")
 	private let camera = SKCameraNode()
 	private var isTracking: Bool = false {
 		didSet {
 			if self.isTracking != oldValue {
-				self.updateMoveToUserLocationNode()
+				self.updateFollowingMode()
 			}
 		}
 	}
 	private var isPanGestureInProgress = false {
 		didSet {
 			if self.isPanGestureInProgress != oldValue {
-				self.updateMoveToUserLocationNode()
+				self.updateFollowingMode()
 				self.rootNode.updateCurrentLocationNode()
 			}
 		}
@@ -36,7 +36,7 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 		}
 	}
 	private weak var interactionTimer: Timer?
-
+	private var updateUserLocationAtLeastOnce = false
 	private let tileLoader = TileLoader()
 	private lazy var locationManager = CLLocationManager()
 	private var scheduledSessionItem: WatchSessionItem? {
@@ -47,6 +47,12 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 			if let name = self.scheduledSessionItem?.name {
 				Analytics.track(name)
 			}
+		}
+	}
+	private var followingMode: FollowingMode = .disabled {
+		didSet {
+			guard self.followingMode != oldValue else { return }
+			self.updateMoveToUserLocationNode()
 		}
 	}
 
@@ -67,9 +73,14 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 
 			self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
 			self.locationManager.delegate = self
+
+			self.locationManager.headingFilter = 3
+			if CLLocationManager.headingAvailable() {
+				self.locationManager.startUpdatingHeading()
+			}
 			self.isInterfaceReady = true
 		}
-		self.updateMoveToUserLocationNode()
+		self.updateFollowingMode()
 	}
 
 	override func awake(withContext context: Any?) {
@@ -153,9 +164,44 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 		}
 	}
 
-	// MARK: CLLocationManagerDelegate
+	private func startInteractionTimer() {
+		self.interactionTimer?.invalidate()
+		self.interactionTimer = Timer.scheduledTimer(
+			timeInterval: 0.3,
+			target: self,
+			selector: #selector(self.interactionDidEnd),
+			userInfo: nil,
+			repeats: false
+		)
+	}
 
-	private var updateUserLocationAtLeastOnce = false
+	@objc private func interactionDidEnd() {
+		self.rootNode.loadVisibleTiles()
+		if let item = self.scheduledSessionItem {
+			self.updateSessionItem(item)
+			self.scheduledSessionItem = nil
+		}
+	}
+
+	private func updateMoveToUserLocationNode() {
+		self.moveToUserLocationNode.texture = self.followingMode.texture()
+		let size = self.scene.frame.size
+		let offset: CGFloat = 25
+		self.moveToUserLocationNode.position = CGPoint(x: size.width * 0.5 - offset, y: -size.height * 0.5 + offset)
+	}
+}
+
+// MARK: - RouteControllerDelegate
+extension InterfaceController: RouteControllerDelegate {
+	func didSelectManeuver(_ maneuver: Maneuver) {
+		self.popToRootController()
+		Analytics.track("WatchAppSelectManeuver")
+		self.rootNode.selectedManeuver = maneuver
+	}
+}
+
+// MARK: - CLLocationManagerDelegate
+extension InterfaceController: CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		self.rootNode.currentLocation = manager.location?.coordinate
 		guard let location = manager.location, !self.isPanGestureInProgress else { return }
@@ -163,7 +209,7 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 		if !self.updateUserLocationAtLeastOnce {
 			self.updateUserLocationAtLeastOnce = true
 			self.rootNode.move(to: location.coordinate, zoomLevel: .kDistrictZoomLevel)
-			self.updateMoveToUserLocationNode()
+			self.updateFollowingMode()
 		} else if self.isTracking {
 			self.rootNode.move(to: location.coordinate, zoomLevel: self.rootNode.scale)
 		} else {
@@ -181,10 +227,71 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 		}
 	}
 
-	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+		print("locationManager error: \(error)")
+	}
 
-	// MARK: WCSessionDelegate
+	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+		self.rootNode.userLocationNode.heading = manager.heading
+	}
+}
 
+// MARK: MapNodeDelegate
+extension InterfaceController: MapNodeDelegate {
+	func updateFollowingMode() {
+		let mode: FollowingMode
+		if self.rootNode.currentLocation == nil {
+			mode = .disabled
+		} else if self.isTracking {
+			mode = .following
+		} else {
+			mode = .center
+		}
+		self.followingMode = mode
+	}
+
+	func cameraScaleDidChange(_ scale: CGFloat) {
+		self.camera.setScale(scale)
+	}
+
+	func cameraPositionDidChange(_ position: CGPoint, animated: Bool, completion: @escaping () -> Void) {
+		self.cameraPosition = position
+		if animated {
+			self.camera.run(.move(to: position, duration: 0.2)) {
+				completion()
+			}
+		} else {
+			self.camera.position = position
+			completion()
+		}
+	}
+}
+
+// MARK: - WKCrownDelegate
+extension InterfaceController: WKCrownDelegate {
+	struct Scale {
+		static let min: CGFloat = 0.5
+		static let max: CGFloat = 17.4
+	}
+
+	func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
+		var scale = self.rootNode.scale + CGFloat(rotationalDelta * 2)
+		if #available(watchOSApplicationExtension 5.0, *), let crownSequencer = crownSequencer {
+			let isHapticFeedbackEnabled = scale < Scale.max && scale > Scale.min
+			if crownSequencer.isHapticFeedbackEnabled != isHapticFeedbackEnabled {
+				crownSequencer.isHapticFeedbackEnabled = isHapticFeedbackEnabled
+				crownSequencer.focus()
+			}
+		}
+		scale = min(Scale.max, max(scale, Scale.min))
+		self.rootNode.scale = scale
+
+		self.startInteractionTimer()
+	}
+}
+
+// MARK: - WCSessionDelegate
+extension InterfaceController: WCSessionDelegate {
 	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
 		print("ActivationDidCompleteWithState: \(activationState.rawValue)", error ?? "")
 	}
@@ -207,87 +314,4 @@ final class InterfaceController: WKInterfaceController, CLLocationManagerDelegat
 			self.startInteractionTimer()
 		}
 	}
-
-	private func startInteractionTimer() {
-		self.interactionTimer?.invalidate()
-		self.interactionTimer = Timer.scheduledTimer(
-			timeInterval: 0.3,
-			target: self,
-			selector: #selector(self.interactionDidEnd),
-			userInfo: nil,
-			repeats: false
-		)
-	}
-
-	@objc private func interactionDidEnd() {
-		self.rootNode.loadVisibleTiles()
-		if let item = self.scheduledSessionItem {
-			self.updateSessionItem(item)
-			self.scheduledSessionItem = nil
-		}
-	}
-
-	// MARK: WKCrownDelegate
-
-	struct Scale {
-		static let min: CGFloat = 0.5
-		static let max: CGFloat = 17.4
-	}
-
-	func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
-		var scale = self.rootNode.scale + CGFloat(rotationalDelta * 2)
-		if #available(watchOSApplicationExtension 5.0, *), let crownSequencer = crownSequencer {
-			let isHapticFeedbackEnabled = scale < Scale.max && scale > Scale.min
-			if crownSequencer.isHapticFeedbackEnabled != isHapticFeedbackEnabled {
-				crownSequencer.isHapticFeedbackEnabled = isHapticFeedbackEnabled
-				crownSequencer.focus()
-			}
-		}
-		scale = min(Scale.max, max(scale, Scale.min))
-		self.rootNode.scale = scale
-
-		self.startInteractionTimer()
-	}
-
-	// MARK: MapNodeDelegate
-
-	func updateMoveToUserLocationNode() {
-		let mode: FollowingMode
-		if self.rootNode.currentLocation == nil {
-			mode = .disabled
-		} else if self.isTracking {
-			mode = .following
-		} else {
-			mode = .center
-		}
-		self.moveToUserLocationNode.texture = mode.texture()
-		let size = self.scene.frame.size
-		let offset: CGFloat = 25
-		self.moveToUserLocationNode.position = CGPoint(x: size.width * 0.5 - offset, y: -size.height * 0.5 + offset)
-	}
-
-	func cameraScaleDidChange(_ scale: CGFloat) {
-		self.camera.setScale(scale)
-	}
-
-	func cameraPositionDidChange(_ position: CGPoint, animated: Bool, completion: @escaping () -> Void) {
-		self.cameraPosition = position
-		if animated {
-			self.camera.run(.move(to: position, duration: 0.2)) {
-				completion()
-			}
-		} else {
-			self.camera.position = position
-			completion()
-		}
-	}
-
-	// MARK: RouteControllerDelegate
-
-	func didSelectManeuver(_ maneuver: Maneuver) {
-		self.popToRootController()
-		Analytics.track("WatchAppSelectManeuver")
-		self.rootNode.selectedManeuver = maneuver
-	}
-
 }

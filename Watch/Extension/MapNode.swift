@@ -4,7 +4,7 @@ import VNWatch
 
 protocol MapNodeDelegate: AnyObject {
 
-	func updateMoveToUserLocationNode()
+	func updateFollowingMode()
 	func cameraPositionDidChange(_ position: CGPoint, animated: Bool, completion: @escaping () -> Void)
 	func cameraScaleDidChange(_ scale: CGFloat)
 
@@ -33,9 +33,9 @@ final class MapNode: SKSpriteNode {
 	var zoomLevel: Int = 1
 	weak var delegate: MapNodeDelegate?
 
-	private let userLocationNode = SKNode.image(#imageLiteral(resourceName: "geo"))
+	let userLocationNode = UserLocationNode()
 	private let destinationNode = SKNode.image(#imageLiteral(resourceName: "pin"))
-	private var cameraScaleNodes = [SKSpriteNode]()
+	private var cameraScaleNodes = [SKNode]()
 
 	private let tileLoader: TileLoader
 	private var zoomNodes = [Int: MapLayerNode]()
@@ -123,7 +123,7 @@ final class MapNode: SKSpriteNode {
 		self.userLocationNode.position = dc + self.currentNode.correction
 
 		if let lastUserCoordinate = self.lastUserCoordinate, !lastUserCoordinate.isNear(currentLocation) {
-			self.delegate?.updateMoveToUserLocationNode()
+			self.delegate?.updateFollowingMode()
 		}
 	}
 
@@ -137,7 +137,7 @@ final class MapNode: SKSpriteNode {
 		self.cameraPosition = positionInWorld + self.currentNode.correction
 		self.updateCurrentLocationNode()
 
-		self.delegate?.updateMoveToUserLocationNode()
+		self.delegate?.updateFollowingMode()
 		self.delegate?.cameraPositionDidChange(self.cameraPosition, animated: shouldAnimate, completion: { [weak self] in
 			self?.scale = zoomLevel
 			self?.loadVisibleTiles()

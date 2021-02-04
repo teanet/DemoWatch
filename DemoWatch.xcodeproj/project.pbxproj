@@ -44,6 +44,7 @@
 		73A93BA5215E045D0072A683 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73A93B9F215E045D0072A683 /* Assets.xcassets */; };
 		73A93BA7215E045D0072A683 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A93BA3215E045D0072A683 /* Interface.storyboard */; };
 		73A93BA9215E061E0072A683 /* Route.json in Resources */ = {isa = PBXBuildFile; fileRef = 73A93BA8215E061E0072A683 /* Route.json */; };
+		73BDD91E25CBED3C000ACD76 /* UserLocationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDD91D25CBED3C000ACD76 /* UserLocationNode.swift */; };
 		B8E7AF147E0FE168429CD74D /* libPods-DemoWatch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C74D563B5187F2A4551F31 /* libPods-DemoWatch.a */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +144,7 @@
 		73A93BA2215E045D0072A683 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		73A93BA3215E045D0072A683 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		73A93BA8215E061E0072A683 /* Route.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Route.json; sourceTree = "<group>"; };
+		73BDD91D25CBED3C000ACD76 /* UserLocationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationNode.swift; sourceTree = "<group>"; };
 		8029D301CB95D9AED4647BDC /* Pods-DemoWatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoWatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoWatch/Pods-DemoWatch.release.xcconfig"; sourceTree = "<group>"; };
 		96C74D563B5187F2A4551F31 /* libPods-DemoWatch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoWatch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6F3236E55DEDB5EC912EA1B /* libPods-WatchApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +271,7 @@
 				73A93723215DF8280072A683 /* RouteController.swift */,
 				73A93724215DF8280072A683 /* TilePath.swift */,
 				734EFC0022A652DC0008B21B /* FollowingMode.swift */,
+				73BDD91D25CBED3C000ACD76 /* UserLocationNode.swift */,
 			);
 			name = Extension;
 			path = Watch/Extension;
@@ -520,6 +523,7 @@
 				73A93732215DF8280072A683 /* MapNode.swift in Sources */,
 				73A93725215DF8280072A683 /* Analytics.swift in Sources */,
 				73A93730215DF8280072A683 /* SKNode.swift in Sources */,
+				73BDD91E25CBED3C000ACD76 /* UserLocationNode.swift in Sources */,
 				73A9372F215DF8280072A683 /* Int.swift in Sources */,
 				73A93735215DF8280072A683 /* CGFloat.swift in Sources */,
 				73A93731215DF8280072A683 /* TileNode.swift in Sources */,
@@ -753,6 +757,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1217B0C4651B7A7F7A75330E /* Pods-WatchExtension.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;
@@ -777,6 +782,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FD473860A7FA0818A9BC7EA1 /* Pods-WatchExtension.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;
@@ -800,7 +806,7 @@
 		73A93706215DF2990072A683 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;
@@ -820,7 +826,7 @@
 		73A93707215DF2990072A683 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;

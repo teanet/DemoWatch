@@ -97,6 +97,7 @@ final class ViewController: UIViewController, WCSessionDelegate, CLLocationManag
 		print("didChangeAuthorization>>>>>\(status.rawValue)")
 		if status == .authorizedAlways || status == .authorizedWhenInUse {
 			manager.startUpdatingLocation()
+			manager.startUpdatingHeading()
 		}
 	}
 
