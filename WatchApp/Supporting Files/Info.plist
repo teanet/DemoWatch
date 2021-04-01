@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>2GIS</string>
+	<string>2GIS2</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,7 +26,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>$(DGS_COMPANION_PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>$(BUNDLE_ID)</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>

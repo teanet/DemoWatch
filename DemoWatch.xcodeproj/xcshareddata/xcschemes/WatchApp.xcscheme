@@ -63,8 +63,10 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "NO">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/2GIS2">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "73A936E5215DF2970072A683"
@@ -72,7 +74,7 @@
             BlueprintName = "WatchApp"
             ReferencedContainer = "container:DemoWatch.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
       <LocationScenarioReference
          identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
          referenceType = "1">
@@ -84,8 +86,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/2GIS2">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "73A936E5215DF2970072A683"
@@ -93,7 +97,16 @@
             BlueprintName = "WatchApp"
             ReferencedContainer = "container:DemoWatch.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "73A936E5215DF2970072A683"
+            BuildableName = "WatchApp.app"
+            BlueprintName = "WatchApp"
+            ReferencedContainer = "container:DemoWatch.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

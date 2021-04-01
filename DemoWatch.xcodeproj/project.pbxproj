@@ -597,6 +597,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_ID = xyz.nazabore.DemoWatch1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -661,6 +662,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_ID = xyz.nazabore.DemoWatch1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -727,7 +729,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -746,7 +748,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -761,14 +763,14 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;
-				DGS_WATCH_APP_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch.WatchApp;
+				DGS_WATCH_APP_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch1.WatchApp;
 				INFOPLIST_FILE = "WatchApp Extension/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch.WatchApp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID).WatchApp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -786,14 +788,14 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;
-				DGS_WATCH_APP_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch.WatchApp;
+				DGS_WATCH_APP_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch1.WatchApp;
 				INFOPLIST_FILE = "WatchApp Extension/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch.WatchApp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID).WatchApp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -810,10 +812,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;
-				DGS_COMPANION_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch;
+				DGS_COMPANION_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch1;
 				IBSC_MODULE = WatchApp_Extension;
 				INFOPLIST_FILE = "WatchApp/Supporting Files/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch.WatchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID).WatchApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -830,10 +832,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJ648XXPWE;
-				DGS_COMPANION_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch;
+				DGS_COMPANION_PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch1;
 				IBSC_MODULE = WatchApp_Extension;
 				INFOPLIST_FILE = "WatchApp/Supporting Files/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = xyz.nazabore.DemoWatch.WatchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID).WatchApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;

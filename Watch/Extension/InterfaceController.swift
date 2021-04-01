@@ -68,15 +68,20 @@ final class InterfaceController: WKInterfaceController {
 
 		self.rootNode.sceneFrame = self.scene.frame
 		if !self.isInterfaceReady {
-			self.rootNode.currentLocation = self.locationManager.location?.coordinate
-			self.rootNode.scale = 2
 
+			self.rootNode.scale = 2
 			self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
 			self.locationManager.delegate = self
-
-			self.locationManager.headingFilter = 3
-			if CLLocationManager.headingAvailable() {
-				self.locationManager.startUpdatingHeading()
+			if CLLocationManager.authorizationStatus() == .notDetermined {
+				self.locationManager.requestWhenInUseAuthorization()
+			} else {
+				DispatchQueue.global().async {
+					if let location = self.locationManager.location?.coordinate {
+						DispatchQueue.main.async {
+							self.rootNode.currentLocation = location
+						}
+					}
+				}
 			}
 			self.isInterfaceReady = true
 		}
@@ -100,6 +105,7 @@ final class InterfaceController: WKInterfaceController {
 		self.scene.camera = self.camera
 
 		self.camera.addChild(self.moveToUserLocationNode)
+		self.updateMoveToUserLocationNode()
 	}
 
 	override func willActivate() {
@@ -223,7 +229,12 @@ extension InterfaceController: CLLocationManagerDelegate {
 				manager.requestWhenInUseAuthorization()
 			case .authorizedAlways, .authorizedWhenInUse:
 				manager.startUpdatingLocation()
-			default: break
+				if CLLocationManager.headingAvailable() {
+					manager.headingFilter = 3
+					manager.startUpdatingHeading()
+				}
+			default:
+				break
 		}
 	}
 
